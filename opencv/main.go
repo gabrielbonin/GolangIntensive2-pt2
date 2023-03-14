@@ -1,6 +1,8 @@
 package main
 
 import (
+	"image/color"
+
 	"gocv.io/x/gocv"
 )
 
@@ -27,6 +29,14 @@ func main() {
 			println("Cannot read from webcam")
 			return
 		}
+		if img.Empty() {
+			continue
+		}
+		myface := classfier.DetectMultiScale(img)
+		for _, r := range myface {
+			gocv.Rectangle(&img, r, color.RGBA{0, 255, 0, 0}, 3)
+		}
+		window.IMShow(img)
 
 	}
 }
